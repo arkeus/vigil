@@ -22,7 +22,7 @@ set :use_sudo, false
 # Git
 
 set :scm, :git
-set :repository,  "~/#{application}/.git"
+set :repository,  "C:/Dev/Workspace/Rails/Vigil/.git"
 set :branch, "master"
 
 # VPS
