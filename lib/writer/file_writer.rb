@@ -37,7 +37,7 @@ class FileWriter < Writer
   
   def root
     base = case
-      when Rails.env.production? then "~/files"
+      when Rails.env.production? then "/home/arkeus/files"
       when Rails.env.development? then "C:/Dev/Workspace/Files"
       when Rails.env.test? then Dir.tmpdir
     end
