@@ -1,6 +1,6 @@
 <div id="view-container">
     <div id="view">
-        <div id="element" class="left" style="overflow:auto">
+        <div id="element" class="code-element">
             <%=raw CodeRay.scan(@writer.read(@path), :javascript).html(:css => :style, :line_numbers => :table) %>
         </div>
         <div id="title"><%= @paste.name || "Untitled" %></div>
