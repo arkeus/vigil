@@ -1,23 +1,23 @@
 class Writer
   def initialize; end
   
-  def write(key, file)
+  def write(path, file)
     raise NotImplementedError
   end
   
-  def read(key)
+  def read(path)
     raise NotImplementedError
   end
   
-  def exists?(key)
+  def exists?(path)
     raise NotImplementedError
   end
   
-  def size(key)
+  def size(path)
     raise NotImplementedError
   end
   
-  def dimensions(key)
+  def dimensions(path)
     raise NotImplementedError
   end
   
