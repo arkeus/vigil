@@ -286,6 +286,13 @@ textarea#code {
         max-height: 600px;
         overflow: auto;
       }
+      
+      &.code-element {
+        max-width: 800px;
+        max-height: 400px;
+        overflow: auto;
+        text-align: left;
+      }
     }
     
     #title {
