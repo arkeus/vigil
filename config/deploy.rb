@@ -1,6 +1,6 @@
 # RVM
 
-$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
 set :rvm_ruby_string, 'default'
 set :rvm_type, :user
@@ -23,6 +23,7 @@ set :use_sudo, false
 
 set :scm, :git
 set :repository,  "C:/Dev/Workspace/Rails/Vigil/.git"
+#set :repository,  "~/Documents/Workspace/Vigil/.git"
 set :branch, "master"
 
 # VPS
