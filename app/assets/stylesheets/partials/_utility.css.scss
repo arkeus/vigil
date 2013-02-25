@@ -1,0 +1,25 @@
+// Quick align
+.left { text-align: left; }
+.right { text-align: right; }
+.center { text-align: center; }
+
+// Quick float
+.float-left { float: left; }
+.float-right { float: right; }
+.clear { clear: both; }
+
+// Make an element unselectable
+@mixin unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+// Revert to border box sizing
+@mixin box-size {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}

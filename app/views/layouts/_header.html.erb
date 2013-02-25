@@ -1,0 +1,10 @@
+<header><div class="bounds">
+	<nav>
+		<div class="item" id="item-home"><%= link_to content_tag(:i, "", :class => "icon-home") + " Home", root_url(:subdomain => false) %></div>
+		<div class="item" id="item-projects"><%= link_to content_tag(:i, "", :class => "icon-book") + " Projects", root_url(:subdomain => false) %></div>
+		<div class="item" id="item-community"><%= link_to content_tag(:i, "", :class => "icon-comments") + " Community", root_url(:subdomain => false) %></div>
+		<div class="item" id="item-paste"><%= link_to content_tag(:i, "", :class => "icon-paste") + " Paste", root_url(:subdomain => "paste") %></div>
+		<div class="item" id="item-about"><%= link_to content_tag(:i, "", :class => "icon-question-sign") + " About", root_url(:subdomain => false) %></div>
+	</nav>
+	<a id="logo" href="<%= root_url %>"><i class="icon-star icon-spin"></i> vi<em>g</em>il<%= content_for?(:subtitle) ? content_tag(:strong, yield(:subtitle)) : nil %></a>
+</div></header>

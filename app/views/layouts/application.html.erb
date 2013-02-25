@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vigil</title>
+  <link href='http://fonts.googleapis.com/css?family=Merienda:700' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "http://code.jquery.com/jquery-1.9.1.min.js" %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <%= yield :head %>
+</head>
+<body>
+
+<%= render :partial => "layouts/header" %>
+<section id="body"><div class="bounds" id="<%= content_for?(:page) ? yield(:page) : "content" %>">
+    <%= yield %>
+</div></section>
+<%= render :partial => "layouts/footer" %>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<%= form_tag("/upload", :method => :post, :multipart => true) do -%>
+
+<div id="error" class="container">
+    <div class="title">ERROR</div>
+    <div class="content">
+        <span class="message">Error message goes here, bitches.</span>
+        <i class="icon-wrench"></i>
+    </div>
+</div>
+
+<div id="right-column">
+    <div class="container" id="upload-code">
+        <div class="cancel hidden" data-type="code">CANCEL</div>
+        <div class="title">CODE</div>
+        <textarea maxlength=2000000 name="code" id="code" placeholder="Select an SWF file, image file, or paste some code here."></textarea>
+    </div>
+</div>
+
+<div id="left-column">
+    <div class="container" id="upload-swf">
+        <div class="cancel hidden" data-type="swf">CANCEL</div>
+        <div class="title">SWF</div>
+        <div class="content">
+            <div class="file-button" id="file-swf">
+                <i class="icon-desktop"></i> <span class="name" data-content="Choose SWF File">Choose SWF File</span>
+                <div class="filesize hidden"></div>
+            </div>
+            <div class="notes">
+                Maximum SWF Size: <strong>10MB</strong><br>
+                <strong>Stage3D</strong> will automatically enabled if present.
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" id="upload-img">
+        <div class="cancel hidden" data-type="img">CANCEL</div>
+        <div class="title">IMAGE</div>
+        <div class="content">
+            <div class="file-button" id="file-img">
+                <i class="icon-picture"></i> <span class="name" data-content="Choose Image File">Choose Image File</span>
+                <div class="filesize hidden"></div>
+            </div>
+            <div class="notes">
+                Maximum Image Size: <strong>2MB</strong><br>
+                Accepted filetypes: <strong>jpg, gif, png</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<div id="options-row" class="container">
+    <div class="option" id="option-title">
+        <div class="title">TITLE / DESCRIPTION</div>
+        <input maxlength=255 type="text" name="name" id="input-title" class="content">
+    </div>
+    <div class="option" id="option-retention">
+        <div class="title">RETENTION</div>
+        <div class="content center">
+            <input type="radio" name="retention" value="1" id="retention-hour" checked><label for="retention-hour">Hour</label>
+            <input type="radio" name="retention" value="24" id="retention-day"><label for="retention-day">Day</label>
+            <input type="radio" name="retention" value="168" id="retention-week"><label for="retention-week">Week</label>
+            <input type="radio" name="retention" value="744" id="retention-month"><label for="retention-month">Month</label>
+        </div>
+    </div>
+    <div class="option no-pad" id="option-submit">
+        <div class="title">&nbsp;</div>
+        <input id="input-file" name="file" type="file">
+        <input type="hidden" name="filetype" id="input-type" value="">
+        <button id="input-submit" class="content" disabled><i class="icon-cloud-upload"></i> <span>Upload</span></button>
+    </div>
+    <div class="clear"></div>
+</div>
+<% end -%>

@@ -1,0 +1,25 @@
+<% content_for :head do %>
+<script>
+    swfobject.embedSWF("/f/<%= @key %>", "flashContent", "<%= @width %>", "<%= @height %>", "11.0.0", false, {}, { "wmode" : "direct" }, {});
+</script>
+<% end %>
+
+<div id="view-container">
+    <div id="direct" style="width:<%= (@width + 10) < 400 ? 400 : (@width + 10) %>px;">
+        <a href="/f/<%= @key %>">DIRECT LINK</a>
+    </div>
+    <div id="view" style="width:<%= (@width + 10) < 400 ? 400 : (@width + 10) %>px;">
+        <div id="element" style="width:<%= @width %>px;height:<%= @height %>px">
+            <div id="flashContent" class="center">Unable To View Movie</div>
+        </div>
+        <div id="title"><%= @paste.name || "Untitled" %></div>
+        <div id="details">
+            <strong>Views</strong>: <%= @paste.views %><br>
+            <strong>Dimensions</strong>: <%= @width %>x<%= @height %><br>
+            <strong>File Size</strong>: <%= number_to_human_size(@size) %> bytes<br>
+            <strong>File Type</strong>: <%= @type %><br>
+            <strong>Uploaded</strong>: <%= @paste.created_at.to_s.split(" ").first %><br>
+            <strong>Expires In</strong>: <%= duration(Time.now, @paste.expires_at) %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div id="view-container">
+    <div id="view">
+        <div id="element" class="left" style="overflow:auto">
+            <%=raw CodeRay.scan(@writer.read(@path), :javascript).html(:css => :style, :line_numbers => :table) %>
+        </div>
+        <div id="title"><%= @paste.name || "Untitled" %></div>
+        <div id="details">
+            <strong>Views</strong>: <%= @paste.views %><br>
+            <strong>File Size</strong>: <%= number_to_human_size(@size) %><br>
+            <strong>Uploaded</strong>: <%= @paste.created_at.to_s.split(" ").first %><br>
+            <strong>Expires In</strong>: <%= duration(Time.now, @paste.expires_at) %>
+        </div>
+    </div>
+</div>
