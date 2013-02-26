@@ -42,6 +42,7 @@ class PasteController < ApplicationController
         raise ArgumentError.new("Invalid file type: #{filetype}")
       end
       
+      raise ArgumentError.new("Filename must begin with a letter, number, or underscore") unless filename =~ /^[a-zA-z0-9_]/
       raise ArgumentError.new("File is too large (#{filesize} > #{get_max_filesize(filetype)})") if filesize > get_max_filesize(filetype)
       
       paste = Paste.new({
@@ -80,10 +81,6 @@ class PasteController < ApplicationController
   end
   
   protected
-  
-  def validate_filename!(filename)
-    
-  end
   
   def set_paste
     @key = params[:id]
