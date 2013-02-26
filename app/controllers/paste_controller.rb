@@ -4,7 +4,6 @@ require "coderay"
 
 class PasteController < ApplicationController
   before_filter :set_paste, :only => [:swf, :image, :code]
-  before_filter :set_file, :only => [:swf, :image, :code, :direct]
   
   def index
   end
@@ -18,48 +17,49 @@ class PasteController < ApplicationController
   def code
   end
   
-  def direct
-    send_file @path, :type => @type, :disposition => "inline"
-  end
-  
   def upload
     writer = FileWriter.new
-    file = params[:file] || params[:code].to_s
-    duration = params[:retention].to_i
-    expires = Time.now + duration.hours
     filetype = params[:filetype].downcase
+    file = filetype != "code" ? params[:file] : params[:code].to_s
+    retention = Retention.from_i(params[:retention].to_i)
+    expires = Time.now + retention.time
+    width = height = type = nil
     
     begin
       if filetype == "swf" || filetype == "image"
         filename = file.original_filename
         filesize = file.size
         begin
-          writer.dimensions(file.tempfile.path) # throws exception if invalid filetype
+          width, height, type = writer.dimensions(file.tempfile.path) # throws exception if invalid filetype
         rescue
           raise "Invalid filetype"
         end
       elsif filetype == "code"
         filename = "none"
         filesize = file.length
+        type = "text/plain"
       else
         raise ArgumentError.new("Invalid file type: #{filetype}")
       end
       
       raise ArgumentError.new("File is too large (#{filesize} > #{get_max_filesize(filetype)})") if filesize > get_max_filesize(filetype)
-      raise ArgumentError.new("Invalid rentention time") if duration > 1000
       
       paste = Paste.new({
         :filetype => filetype,
+        :bucket => writer.bucket,
         :key => "whatever",
         :name => params[:name],
         :ip => request.remote_ip,
         :filename => filename,
         :filesize => file.size,
-        :expires_at => expires
+        :expires_at => expires,
+        :width => width,
+        :height => height,
+        :content_type => type
       })
       paste.save!
       
-      key = ID.encrypt(paste.id)
+      key = retention.code + ID.encrypt(paste.id)
       paste.key = key
       paste.save!
       
@@ -68,9 +68,11 @@ class PasteController < ApplicationController
       redirect_to :action => filetype, :id => key
     rescue Exception => e
       raise
-      #puts e.inspect
-      #redirect_to :index, :error => "Could not save" and return
     end
+  rescue Exception => e
+    Rails.logger.error("Could not upload: #{e.message}\n#{e.backtrace.join("\n")}")
+    flash[:error] = e.message
+    redirect_to :index
   end
   
   def all
@@ -83,20 +85,9 @@ class PasteController < ApplicationController
     
   end
   
-  def set_file
-    @key = params[:id]
-    @writer = FileWriter.new
-    @path = @writer.get_path(@key)
-    @size = @writer.size(@path)
-    
-    begin
-      @width, @height, @type = @writer.dimensions(@path)
-    rescue
-      raise "Invalid filetype" unless (!@paste.nil? && @paste.filetype == "code")
-    end
-  end
-  
   def set_paste
+    @key = params[:id]
+    @path = S3Writer.get_path(@key)
     @paste = Paste.find_by_key(params[:id])
     raise "This paste does not exist!" unless @paste
     raise "This paste has expired!" if @paste.expires_at <= Time.now
@@ -106,7 +97,7 @@ class PasteController < ApplicationController
   
   def get_max_filesize(type)
     return case type
-      when "swf" then 10 * 1024 * 1024
+      when "swf" then 20 * 1024 * 1024
       when "image" then 2 * 1024 * 1024
       when "code" then 2 * 1024 * 1024
       else 0

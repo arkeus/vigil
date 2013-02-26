@@ -4,7 +4,7 @@ var Paste = (function() {
     var CODE = "code";
     
     var FADED_OPACITY = 0.2;
-    var MAX_SWF_SIZE = 10 * 1024 * 1024;
+    var MAX_SWF_SIZE = 20 * 1024 * 1024;
     var MAX_IMAGE_SIZE = 2 * 1024 * 1024;
     
     var module = {};
