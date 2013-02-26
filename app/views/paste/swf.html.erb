@@ -16,7 +16,7 @@
         <div id="details">
             <strong>Views</strong>: <%= @paste.views %><br>
             <strong>Dimensions</strong>: <%= @paste.width %>x<%= @paste.height %><br>
-            <strong>File Size</strong>: <%= number_to_human_size(@paste.size) %> bytes<br>
+            <strong>File Size</strong>: <%= number_to_human_size(@paste.filesize) %> bytes<br>
             <strong>File Type</strong>: <%= @paste.content_type %><br>
             <strong>Uploaded</strong>: <%= @paste.created_at.to_s.split(" ").first %><br>
             <strong>Expires In</strong>: <%= duration(Time.now, @paste.expires_at) %>

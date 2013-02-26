@@ -1,6 +1,6 @@
 Vigil::Application.routes.draw do
   constraints :subdomain => "paste" do
-    root :to => "paste#index"
+    root :to => "paste#index", :as => "index"
     match "/upload" => "paste#upload", :as => "upload"
     match "/swf/:id" => "paste#swf", :as => "swf"
     match "/img/:id" => "paste#image", :as => "image"

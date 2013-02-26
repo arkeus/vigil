@@ -1,16 +1,16 @@
 <div id="view-container">
-    <div id="direct" style="width:<%= file_container_width(@width) %>px;">
+    <div id="direct" style="width:<%= file_container_width(@paste.width) %>px;">
         <a href="<%= S3Writer.get_path(@key) %>">DIRECT LINK</a>
     </div>
     <div id="view">
         <div id="element">
-            <a href="<%= S3Writer.get_path(@key) %>"><img src="<%= S3Writer.get_path(@key) %>" width=<%= @width %> height=<%= @height %>></a>
+            <a href="<%= S3Writer.get_path(@key) %>"><img src="<%= S3Writer.get_path(@key) %>" width=<%= @paste.width %> height=<%= @paste.height %>></a>
         </div>
         <div id="title"><%= @paste.name || "Untitled" %></div>
         <div id="details">
             <strong>Views</strong>: <%= @paste.views %><br>
             <strong>Dimensions</strong>: <%= @paste.width %>x<%= @paste.height %><br>
-            <strong>File Size</strong>: <%= number_to_human_size(@paste.size) %> bytes<br>
+            <strong>File Size</strong>: <%= number_to_human_size(@paste.filesize) %> bytes<br>
             <strong>File Type</strong>: <%= @paste.content_type %><br>
             <strong>Uploaded</strong>: <%= @paste.created_at.to_s.split(" ").first %><br>
             <strong>Expires In</strong>: <%= duration(Time.now, @paste.expires_at) %>

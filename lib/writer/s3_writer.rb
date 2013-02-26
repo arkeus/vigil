@@ -21,23 +21,23 @@ class S3Writer
     raise ArgumentError.new("File at #{get_path(key)} already exists") if exists?(key)
     type = "text/plain"
     width, height, type = dimensions(file.path) unless file.is_a?(String)
-    S3Object.store(key, file.is_a?(String) ? file : File.open(file.path), bucket, :content_type => type)
+    S3Object.store(key, file.is_a?(String) ? file : File.open(file.path), self.class.bucket, :content_type => type)
   end
   
   def read(key)
     raise ArgumentError.new("File at #{get_path(key)} doesn't exist") unless exists?(key)
-    return S3Object.find(key, bucket).value
+    return S3Object.find(key, self.class.bucket).value
   end
   
   def exists?(key)
-    return S3Object.exists?(key, bucket)
+    return S3Object.exists?(key, self.class.bucket)
   end
   
   def size(key)
-    return S3Object.find(key, bucket).about['content-length']
+    return S3Object.find(key, self.class.bucket).about['content-length']
   end
   
-  def self.dimensions(path)
+  def dimensions(path)
     instance = ImageSpec.new(path)
     return [instance.width, instance.height, instance.content_type]
   end

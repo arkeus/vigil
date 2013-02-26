@@ -1,12 +1,12 @@
 <div id="view-container">
     <div id="view">
         <div id="element" class="code-element">
-            <%=raw CodeRay.scan(S3Writer.read(@key), :javascript).html(:css => :style, :line_numbers => :table) %>
+            <%=raw CodeRay.scan(S3Writer.new.read(@key), :javascript).html(:css => :style, :line_numbers => :table) %>
         </div>
         <div id="title"><%= @paste.name || "Untitled" %></div>
         <div id="details">
             <strong>Views</strong>: <%= @paste.views %><br>
-            <strong>File Size</strong>: <%= number_to_human_size(@paste.size) %><br>
+            <strong>File Size</strong>: <%= number_to_human_size(@paste.filesize) %><br>
             <strong>Uploaded</strong>: <%= @paste.created_at.to_s.split(" ").first %><br>
             <strong>Expires In</strong>: <%= duration(Time.now, @paste.expires_at) %>
         </div>

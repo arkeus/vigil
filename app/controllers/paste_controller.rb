@@ -1,4 +1,5 @@
-require "writer/file_writer"
+require "writer/s3_writer"
+require "retention"
 require "id"
 require "coderay"
 
@@ -18,7 +19,7 @@ class PasteController < ApplicationController
   end
   
   def upload
-    writer = FileWriter.new
+    writer = S3Writer.new
     filetype = params[:filetype].downcase
     file = filetype != "code" ? params[:file] : params[:code].to_s
     retention = Retention.from_i(params[:retention].to_i)
@@ -32,7 +33,7 @@ class PasteController < ApplicationController
         begin
           width, height, type = writer.dimensions(file.tempfile.path) # throws exception if invalid filetype
         rescue
-          raise "Invalid filetype"
+          raise ArgumentError.new("Invalid filetype")
         end
       elsif filetype == "code"
         filename = "none"
@@ -47,7 +48,7 @@ class PasteController < ApplicationController
       
       paste = Paste.new({
         :filetype => filetype,
-        :bucket => writer.bucket,
+        :bucket => S3Writer.bucket,
         :key => "whatever",
         :name => params[:name],
         :ip => request.remote_ip,
@@ -64,7 +65,7 @@ class PasteController < ApplicationController
       paste.key = key
       paste.save!
       
-      writer.write(writer.get_path(key), file)
+      writer.write(key, file)
       
       redirect_to :action => filetype, :id => key
     rescue Exception => e

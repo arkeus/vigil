@@ -11,19 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130224073230) do
+ActiveRecord::Schema.define(:version => 20130226041908) do
 
   create_table "pastes", :force => true do |t|
-    t.string   "filetype",                  :null => false
+    t.string   "filetype",                    :null => false
     t.string   "key"
     t.string   "name"
-    t.string   "ip",                        :null => false
-    t.string   "filename",                  :null => false
-    t.integer  "filesize",                  :null => false
-    t.integer  "views",      :default => 0, :null => false
-    t.datetime "expires_at",                :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.string   "ip",                          :null => false
+    t.string   "filename",                    :null => false
+    t.integer  "filesize",                    :null => false
+    t.integer  "views",        :default => 0, :null => false
+    t.datetime "expires_at",                  :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.string   "bucket"
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "content_type"
   end
+
+  add_index "pastes", ["key"], :name => "i_key", :unique => true
 
 end

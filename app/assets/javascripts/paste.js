@@ -191,7 +191,7 @@ var Paste = (function() {
     
     module.error = function(message) {
         $("#error").stop(true, true).hide(250, function() {
-            $("#error .content").text(message);
+            $("#error .message").text(message);
             $("#error").show(500);
         });
     };
@@ -216,6 +216,10 @@ var Paste = (function() {
         $("#input-title").data("touched", false);
         $("#input-title").on("change", function() { $("#input-title").data("touched", true); });
         $("form").submit(submitForm);
+        
+        if ($("#error .message").text().length > 0) {
+        	module.error($("#error .message").text());
+        }
     };
     
     return module;

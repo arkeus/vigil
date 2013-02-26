@@ -244,6 +244,12 @@ textarea#code {
   margin-bottom: 15px;
   color: #a00;
   display: none;
+  position: relative;
+  
+  i {
+    position: absolute;
+    right: 4px;
+  }
   
   .content {
     border-right-color: #faa;
