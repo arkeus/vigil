@@ -7,15 +7,31 @@ class PasteController < ApplicationController
   before_filter :set_paste, :only => [:swf, :image, :code]
   
   def index
+  rescue Exception => e
+    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
+    flash[:error] = e.message
+    redirect_to :index
   end
 
   def swf
+  rescue Exception => e
+    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
+    flash[:error] = e.message
+    redirect_to :index
   end
 
   def image
+  rescue Exception => e
+    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
+    flash[:error] = e.message
+    redirect_to :index
   end
 
   def code
+  rescue Exception => e
+    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
+    flash[:error] = e.message
+    redirect_to :index
   end
   
   def upload
