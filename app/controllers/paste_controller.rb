@@ -7,31 +7,15 @@ class PasteController < ApplicationController
   before_filter :set_paste, :only => [:swf, :image, :code]
   
   def index
-  rescue Exception => e
-    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
-    flash[:error] = e.message
-    redirect_to :index
   end
 
   def swf
-  rescue Exception => e
-    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
-    flash[:error] = e.message
-    redirect_to :index
   end
 
   def image
-  rescue Exception => e
-    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
-    flash[:error] = e.message
-    redirect_to :index
   end
 
   def code
-  rescue Exception => e
-    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
-    flash[:error] = e.message
-    redirect_to :index
   end
   
   def upload
@@ -107,6 +91,10 @@ class PasteController < ApplicationController
     raise "This paste has expired!" if @paste.expires_at <= Time.now
     @paste.views += 1
     @paste.save!
+  rescue Exception => e
+    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
+    flash[:error] = e.message
+    redirect_to :index
   end
   
   def get_max_filesize(type)
