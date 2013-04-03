@@ -13,6 +13,7 @@ class Retention
       when 2 then return DAY
       when 3 then return WEEK
       when 4 then return MONTH
+      when 5 then return FOREVER
       else return HOUR
     end
   end
@@ -21,6 +22,7 @@ class Retention
   DAY = Retention.new("Day", 1.day, "d").freeze
   WEEK = Retention.new("Week", 1.week, "w").freeze
   MONTH = Retention.new("Month", 1.month, "m").freeze
+  FOREVER = Retention.new("Forever", 255.years, "f").freeze
   
-  ALL = [HOUR, DAY, WEEK, MONTH].freeze
+  ALL = [HOUR, DAY, WEEK, MONTH, FOREVER].freeze
 end

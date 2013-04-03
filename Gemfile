@@ -25,8 +25,8 @@ gem 'rack', '1.4.1'
 gem 'ruby-imagespec'
 gem 'coderay'
 gem 'aws-s3'
-gem 'therubyracer'
-gem 'pg'
+gem 'therubyracer', :platforms => :ruby
+gem 'pg', :platforms => :ruby
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -38,8 +38,8 @@ gem 'pg'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
-gem 'rvm-capistrano'
+gem 'capistrano', :platforms => :ruby
+gem 'rvm-capistrano', :platforms => :ruby
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
