@@ -91,6 +91,10 @@ class PasteController < ApplicationController
     raise "This paste has expired!" if @paste.expires_at <= Time.now
     @paste.views += 1
     @paste.save!
+  rescue Exception => e
+    Rails.logger.error("Error: #{e.message}\n#{e.backtrace.join("\n")}")
+    flash[:error] = e.message
+    redirect_to :index
   end
   
   def get_max_filesize(type)
